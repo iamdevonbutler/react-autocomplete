@@ -1,8 +1,8 @@
 {
-  "name": "react-autocomplete-with-onblur-onfocus",
-  "version": "0.1.0",
+  "name": "react-autocomplete-with-onBlur-onFocus",
+  "version": "0.1.1",
   "description": "Accessible, extensible, Autocomplete for React.js",
-  "main": "./lib/index.js",
+  "main": "./build/lib/index.js",
   "repository": {
     "type": "git",
     "url": "https://github.com/iamdevonbutler/react-autocomplete.git"
