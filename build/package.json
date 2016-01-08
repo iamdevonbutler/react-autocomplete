@@ -1,19 +1,20 @@
 {
-  "name": "react-autocomplete",
-  "version": "0.1.3",
+  "name": "react-autocomplete-with-onBlur-onFocus",
+  "version": "0.1.1",
   "description": "Accessible, extensible, Autocomplete for React.js",
   "main": "./build/lib/index.js",
   "repository": {
     "type": "git",
-    "url": "https://github.com/rackt/react-autocomplete.git"
+    "url": "https://github.com/iamdevonbutler/react-autocomplete.git"
   },
   "homepage": "https://github.com/rackt/react-autocomplete",
-  "bugs": "https://github.com/rackt/react-autocomplete/issues",
+  "bugs": "https://github.com/iamdevonbutler/react-autocomplete/issues",
   "directories": {
     "example": "examples"
   },
   "authors": [
-    "Ryan Florence <rpflorence@gmail.com>"
+    "Ryan Florence <rpflorence@gmail.com>",
+    "Jason Pescione <jpescione@gmail.com>"
   ],
   "license": "MIT",
   "tags": [

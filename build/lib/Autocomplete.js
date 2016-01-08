@@ -3,6 +3,7 @@
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var React = require('react');
+var ReactDOM = require('react-dom');
 var scrollIntoView = require('dom-scroll-into-view');
 
 var _debugStates = [];
@@ -23,6 +24,8 @@ var Autocomplete = React.createClass({
   getDefaultProps: function getDefaultProps() {
     return {
       inputProps: {},
+      onBlur: function onBlur() {},
+      onFocus: function onFocus() {},
       onChange: function onChange() {},
       onSelect: function onSelect(value, item) {},
       renderMenu: function renderMenu(items, value, style) {
@@ -75,8 +78,8 @@ var Autocomplete = React.createClass({
 
   maybeScrollItemIntoView: function maybeScrollItemIntoView() {
     if (this.state.isOpen === true && this.state.highlightedIndex !== null) {
-      var itemNode = React.findDOMNode(this.refs['item-' + this.state.highlightedIndex]);
-      var menuNode = React.findDOMNode(this.refs.menu);
+      var itemNode = ReactDOM.findDOMNode(this.refs['item-' + this.state.highlightedIndex]);
+      var menuNode = ReactDOM.findDOMNode(this.refs.menu);
       scrollIntoView(itemNode, menuNode, { onlyScrollIfNeeded: true });
     }
   },
@@ -144,7 +147,7 @@ var Autocomplete = React.createClass({
         this.setState({
           isOpen: false
         }, function () {
-          React.findDOMNode(_this2.refs.input).select();
+          ReactDOM.findDOMNode(_this2.refs.input).select();
         });
       } else {
         var item = this.getFilteredItems()[this.state.highlightedIndex];
@@ -154,7 +157,7 @@ var Autocomplete = React.createClass({
           highlightedIndex: null
         }, function () {
           //React.findDOMNode(this.refs.input).focus() // TODO: file issue
-          React.findDOMNode(_this2.refs.input).setSelectionRange(_this2.state.value.length, _this2.state.value.length);
+          ReactDOM.findDOMNode(_this2.refs.input).setSelectionRange(_this2.state.value.length, _this2.state.value.length);
           _this2.props.onSelect(_this2.state.value, item);
         });
       }
@@ -200,7 +203,7 @@ var Autocomplete = React.createClass({
     var itemValue = this.props.getItemValue(matchedItem);
     var itemValueDoesMatch = itemValue.toLowerCase().indexOf(this.state.value.toLowerCase()) === 0;
     if (itemValueDoesMatch) {
-      var node = React.findDOMNode(this.refs.input);
+      var node = ReactDOM.findDOMNode(this.refs.input);
       var setSelection = function setSelection() {
         node.value = itemValue;
         node.setSelectionRange(_this4.state.value.length, itemValue.length);
@@ -210,7 +213,7 @@ var Autocomplete = React.createClass({
   },
 
   setMenuPositions: function setMenuPositions() {
-    var node = React.findDOMNode(this.refs.input);
+    var node = ReactDOM.findDOMNode(this.refs.input);
     var rect = node.getBoundingClientRect();
     var computedStyle = getComputedStyle(node);
     var marginBottom = parseInt(computedStyle.marginBottom, 10);
@@ -236,7 +239,7 @@ var Autocomplete = React.createClass({
       highlightedIndex: null
     }, function () {
       _this5.props.onSelect(_this5.state.value, item);
-      React.findDOMNode(_this5.refs.input).focus();
+      ReactDOM.findDOMNode(_this5.refs.input).focus();
       _this5.setIgnoreBlur(false);
     });
   },
@@ -283,17 +286,27 @@ var Autocomplete = React.createClass({
     }
   },
 
-  handleInputBlur: function handleInputBlur() {
+  handleInputBlur: function handleInputBlur(event) {
+    var _this7 = this;
+
     if (this._ignoreBlur) return;
     this.setState({
       isOpen: false,
       highlightedIndex: null
+    }, function () {
+      _this7.props.onBlur(event, _this7.state.value);
     });
   },
 
-  handleInputFocus: function handleInputFocus() {
+  handleInputFocus: function handleInputFocus(event) {
+    var _this8 = this;
+
     if (this._ignoreBlur) return;
-    this.setState({ isOpen: true });
+    this.setState({
+      isOpen: true
+    }, function () {
+      _this8.props.onFocus(event, _this8.state.value);
+    });
   },
 
   handleInputClick: function handleInputClick() {
@@ -301,7 +314,7 @@ var Autocomplete = React.createClass({
   },
 
   render: function render() {
-    var _this7 = this;
+    var _this9 = this;
 
     if (this.props.debug) {
       // you don't like it, you love it
@@ -318,16 +331,20 @@ var Autocomplete = React.createClass({
         'aria-autocomplete': 'both',
         'aria-label': this.getActiveItemValue(),
         ref: 'input',
-        onFocus: this.handleInputFocus,
-        onBlur: this.handleInputBlur,
+        onFocus: function (event) {
+          return _this9.handleInputFocus(event);
+        },
+        onBlur: function (event) {
+          return _this9.handleInputBlur(event);
+        },
         onChange: function (event) {
-          return _this7.handleChange(event);
+          return _this9.handleChange(event);
         },
         onKeyDown: function (event) {
-          return _this7.handleKeyDown(event);
+          return _this9.handleKeyDown(event);
         },
         onKeyUp: function (event) {
-          return _this7.handleKeyUp(event);
+          return _this9.handleKeyUp(event);
         },
         onClick: this.handleInputClick,
         value: this.state.value
