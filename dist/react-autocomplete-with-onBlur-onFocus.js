@@ -4,9 +4,9 @@
 	else if(typeof define === 'function' && define.amd)
 		define(["React", "ReactDOM"], factory);
 	else if(typeof exports === 'object')
-		exports["ReactAutocompleteWithOnBlurOnFocus"] = factory(require("React"), require("ReactDOM"));
+		exports["ReactAutocompleteWithOnblurOnfocus"] = factory(require("React"), require("ReactDOM"));
 	else
-		root["ReactAutocompleteWithOnBlurOnFocus"] = factory(root["React"], root["ReactDOM"]);
+		root["ReactAutocompleteWithOnblurOnfocus"] = factory(root["React"], root["ReactDOM"]);
 })(this, function(__WEBPACK_EXTERNAL_MODULE_2__, __WEBPACK_EXTERNAL_MODULE_3__) {
 return /******/ (function(modules) { // webpackBootstrap
 /******/ 	// The module cache
@@ -335,6 +335,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        onClick: function onClick() {
 	          return _this6.selectItemFromMouse(item);
 	        },
+	        key: index,
 	        ref: 'item-' + index
 	      });
 	    });
@@ -1011,4 +1012,4 @@ return /******/ (function(modules) { // webpackBootstrap
 /******/ ])
 });
 ;
-//# sourceMappingURL=react-autocomplete-with-onBlur-onFocus.js.map
+//# sourceMappingURL=react-autocomplete-with-onblur-onfocus.js.map

@@ -263,6 +263,7 @@ var Autocomplete = React.createClass({
         onClick: function onClick() {
           return _this6.selectItemFromMouse(item);
         },
+        key: index,
         ref: 'item-' + index
       });
     });
